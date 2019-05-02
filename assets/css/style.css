@@ -51,6 +51,8 @@ body{
     height: 60px;
     width: 80%;
     margin: 2px;
+    margin-right: auto;
+    margin-left: auto;
     font-size: 32px;
     font-family: 'Alfa Slab One', cursive;
     color: brown;

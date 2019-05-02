@@ -57,10 +57,29 @@ $(document).ready(function() {
         }
     ]
 
+    var gameStarted = false;
+    var questionNum = 0;
+    var timerRemaining = 20;
+    
+//Start game -- Set gameStarted to true
+    $('.startButton').click(function() {
+        gameStarted = true;
+        console.log(gameStarted);
+//Clear container div
+        $('.container').empty()
+//Replace .gameTitle with .question and pass in question from first questionBank object
+        $('.container').append("<div class=question></div>");
+        $('.question').text(questionBank[0].question);
+//4 .answer divs and pass in text from each string in questionBank[].choices -- for loop
+        for(var i = 0; i < questionBank[0].choices.length; i++)
+            $('.container').append("<div class=answer>" + questionBank[0].choices[i] + "</div>");
+    });
 
+    $('.answer').click(function() {
+        
+    })
 
-
-
+//Add 1 to questionNum for each .answer click
 
 
 

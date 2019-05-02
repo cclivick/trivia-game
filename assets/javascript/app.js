@@ -66,20 +66,31 @@ $(document).ready(function() {
         gameStarted = true;
         console.log(gameStarted);
 //Clear container div
-        $('.container').empty()
-//Replace .gameTitle with .question and pass in question from first questionBank object
-        $('.container').append("<div class=question></div>");
-        $('.question').text(questionBank[0].question);
-//4 .answer divs and pass in text from each string in questionBank[].choices -- for loop
-        for(var i = 0; i < questionBank[0].choices.length; i++)
-            $('.container').append("<div class=answer>" + questionBank[0].choices[i] + "</div>");
+        generateQuestion()
     });
 
-    $('.answer').click(function() {
-        
-    })
+    function generateQuestion () {
+    $('.container').empty()
+    //Replace .gameTitle with .question and pass in question from first questionBank object
+            $('.container').append("<div class=question></div>");
+            $('.question').text(questionBank[questionNum].question);
+    //4 .answer divs and pass in text from each string in questionBank[].choices -- for loop
+            for(var i = 0; i < questionBank[questionNum].choices.length; i++) {
+                $('.container').append("<div class=answer>" + questionBank[questionNum].choices[i] + "</div>");
+            }
+            $('.answer').click(function() {
+                questionNum++;
+                generateQuestion();
+                console.log(questionNum);
+            })
+    // $('.answer').click(function() {
+    //     questionNum++;
+    //     console.log(questionNum)
+    // })
 
 //Add 1 to questionNum for each .answer click
+    }
+})
 
 
 
@@ -97,4 +108,5 @@ $(document).ready(function() {
 
 
 
-});
+
+

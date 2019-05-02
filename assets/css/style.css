@@ -35,6 +35,8 @@ body{
     font-size: 54px;
     height: 110px;
     width: 305px;
+    margin-top: 50px;
+    margin-bottom: 10px;
 }
 .question{
     padding: 10px;
@@ -55,4 +57,29 @@ body{
     background-color: blanchedalmond;
     border-radius: 25px;
     border: 6px solid brown; 
+}
+.timer{
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 20px;
+    width: 150px;
+    border-radius: 25px;
+    border:  6px solid rgb(129, 62, 0);
+    background-image: linear-gradient(rgb(180, 83, 3), rgb(179, 126, 57));
+    font-size: 32px;
+    font-family: 'Alfa Slab One', cursive;
+    color: antiquewhite;
+}
+.answer:hover{
+    background-image: radial-gradient(blanchedalmond, rgb(116, 73, 17) )  
+}
+#correct{
+    font-family: 'Alfa Slab One', cursive;
+    font-size: 56px;
+    color: rgb(1, 112, 28);
+}
+#incorrect{
+    font-family: 'Alfa Slab One', cursive;
+    font-size: 56px;
+    color: rgb(187, 3, 3);   
 }

@@ -59,6 +59,8 @@ $(document).ready(function() {
 
     var gameStarted = false;
     var questionNum = 0;
+    var numberRight = 0;
+    var numberWrong = 0;
     var timerRemaining = 20;
     
 //Start game -- Set gameStarted to true
@@ -69,7 +71,7 @@ $(document).ready(function() {
         generateQuestion()
     });
 
-    function generateQuestion () {
+    function generateQuestion() {
     $('.container').empty()
     //Replace .gameTitle with .question and pass in question from first questionBank object
             $('.container').append("<div class=question></div>");
@@ -78,17 +80,32 @@ $(document).ready(function() {
             for(var i = 0; i < questionBank[questionNum].choices.length; i++) {
                 $('.container').append("<div class=answer>" + questionBank[questionNum].choices[i] + "</div>");
             }
-            $('.answer').click(function() {
-                questionNum++;
-                generateQuestion();
-                console.log(questionNum);
-            })
-    // $('.answer').click(function() {
-    //     questionNum++;
-    //     console.log(questionNum)
-    // })
+            $('.answer').click(function(event) {
+                // var userGuess = indexOf(event.target);
+                console.log(event.target);
+                var indexCorrectAnswer = questionBank[questionNum].correctAnswer;
+                console.log(indexCorrectAnswer)
+                if($(this).text() === (questionBank[questionNum].choices[indexCorrectAnswer])) {
+                // This if statement is identifying the text of "this" -> (target of click event). It then compares it to the text of -> (choices @ index of CorrectAnswer of questionBank object @ questionNum)
+                    console.log(true);
+                    $('.container').empty()
+                    $('.container').append("<div id=correct></div>", "<img src=" + questionBank[questionNum].image + ">", "<div id=rightAnswer></div>");
+                    $('#correct').text('Correct!');
+                    $('#rightAnswer').text(questionBank[questionNum].choices[indexCorrectAnswer]);
+                    numberRight++;
+                } else {
+                    console.log(false);
+                    $('.container').empty()
+                    $('.container').append("<div id=incorrect></div>", "<img src=" + questionBank[questionNum].image + ">", "<div id=wrongAnswer></div>");
+                    $('#incorrect').text('Incorrect :(');
+                    $('#wrongAnswer').text(questionBank[questionNum].choices[indexCorrectAnswer]);
+                    numberWrong++;
+                }
 
-//Add 1 to questionNum for each .answer click
+                // questionNum++;
+                // generateQuestion();
+                //This click function will repeat the function generateQuestion each time the user clicks a button with a class of .answer
+            })
     }
 })
 

@@ -5,7 +5,7 @@ body{
 }
 .container{
     height: auto;
-    margin-top: 120px;
+    margin-top: 90px;
     margin-bottom: 120px;
     background-image: linear-gradient(rgb(180, 83, 3), burlywood);
     padding: 20px;
@@ -75,12 +75,14 @@ body{
 .answer:hover{
     background-image: radial-gradient(blanchedalmond, rgb(116, 73, 17) )  
 }
-#correct{
+#correct,
+#rightAnswer{
     font-family: 'Alfa Slab One', cursive;
     font-size: 56px;
     color: rgb(1, 112, 28);
 }
-#incorrect{
+#incorrect,
+#wrongAnswer{
     font-family: 'Alfa Slab One', cursive;
     font-size: 56px;
     color: rgb(187, 3, 3);   

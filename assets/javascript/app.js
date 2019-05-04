@@ -3,8 +3,8 @@
 $(document).ready(function() { 
 
 //Create global variables for gameplay    
-    var questionBank = [{
-        
+    var questionBank = [
+        {   
         question: "What are the Coen Brothers first names?",
         choices: ["James and Evan", "Joel and Ethan", "Jeff and Eric", "Jacob and Eldyn"],
         correctAnswer: 1,
@@ -36,7 +36,7 @@ $(document).ready(function() {
         image: ("assets/images/barton.jpg")
         }, {
         question:"In Burn After Reading (2008), Brad Pitt's character believes that he stumbles on top secret government intelligence. What does it turn out that he is actually reading?",
-        choices:["[John Malkovich]'s memoirs", "[George Clooney]'s phone records", "[Frances McDormand]'s expense reports", "[JK Simmons] javascript code"],
+        choices:["Memoirs", "Phone records", "Expense reports", "Javascript code"],
         correctAnswer: 0,
         image: ("assets/images/burnafter.gif")
         }, {
@@ -61,14 +61,13 @@ $(document).ready(function() {
     var questionNum = 0;
     var numberRight = 0;
     var numberWrong = 0;
-    var timeRemaining = 10;
-    var timeOutID;
+    var timeRemaining;
     
 //Start game -- Set gameStarted to true
     $('.startButton').click(function() {
         gameStarted = true;
+        timeRemaining = 10;
         console.log(gameStarted);
-//Clear container div
         generateQuestion()
         setInterval(countDown, 1000);
     });
@@ -86,13 +85,14 @@ $(document).ready(function() {
             $('#wrongAnswer').text(questionBank[questionNum].choices[indexCorrectAnswer]);
             numberWrong++;
             questionNum++;
-            setTimeout(generateQuestion, 4000);
-            timeRemaining = 14;                
+            setTimeout(generateQuestion, 3000);
+            timeRemaining = 13;                
         }
     }
 
     function generateQuestion() {
-    $('.container').empty()
+        if(questionNum < questionBank.length) {
+            $('.container').empty()
     //Replace .gameTitle with .question and pass in question from first questionBank object
             $('.container').append("<div class=question></div>");
             $('.question').text(questionBank[questionNum].question);
@@ -101,38 +101,46 @@ $(document).ready(function() {
                 $('.container').append("<div class=answer>" + questionBank[questionNum].choices[i] + "</div>");
             }
             $('.container').append("<div class=timer>Timer: "+ timeRemaining +"</div>")
+        } else if (questionNum === questionBank.length) {
+                endGame();
+        }
             $('.answer').click(function(event) {
-                // var userGuess = indexOf(event.target);
-                console.log(event.target);
                 var indexCorrectAnswer = questionBank[questionNum].correctAnswer;
-                console.log(indexCorrectAnswer)
                 if($(this).text() === (questionBank[questionNum].choices[indexCorrectAnswer])) {
                 // This if statement is identifying the text of "this" -> (target of click event). It then compares it to the text of -> (choices @ index of CorrectAnswer of questionBank object @ questionNum)
-                    console.log(true);
-                    $('.container').empty()
+                    $('.container').empty();
                     $('.container').append("<div id=correct></div>", "<img src=" + questionBank[questionNum].image + ">", "<div id=rightAnswer></div>");
                     $('#correct').text('Correct!');
                     $('#rightAnswer').text(questionBank[questionNum].choices[indexCorrectAnswer]);
                     questionNum++;
                     numberRight++;
-                    setTimeout(generateQuestion, 4000);
-                    timeRemaining = 14;
+                    setTimeout(generateQuestion, 3000);
+                    timeRemaining = 13;
                 } else {
-                    console.log(false);
-                    $('.container').empty()
+                    $('.container').empty();
                     $('.container').append("<div id=incorrect></div>", "<img src=" + questionBank[questionNum].image + ">", "<div id=wrongAnswer></div>");
                     $('#incorrect').text('Incorrect :(');
                     $('#wrongAnswer').text(questionBank[questionNum].choices[indexCorrectAnswer]);
                     numberWrong++;
                     questionNum++;
-                    setTimeout(generateQuestion, 4000)
-                    timeRemaining = 14;
+                    setTimeout(generateQuestion, 3000)
+                    timeRemaining = 13;
                 }
-
             })
-    }
-})
+        }
 
+        function endGame () {
+            clearInterval(countDown)
+            $('.container').empty();
+            $('.container').append("<div id=totCorrect>Total Correct: " + numberRight + "</div>", "<div id=totIncorrect>Total Incorrect: " + numberWrong + "</div>", "<button type=button class=startButton>Try Again</button>");
+            gameStarted = false;
+            questionNum = 0;
+            numberRight = 0;
+            numberWrong = 0;
+            timeRemaining = null;
+         }
+
+});
 
 
 

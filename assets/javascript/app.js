@@ -61,7 +61,8 @@ $(document).ready(function() {
     var questionNum = 0;
     var numberRight = 0;
     var numberWrong = 0;
-    var timerRemaining = 20;
+    var timeRemaining = 10;
+    var timeOutID;
     
 //Start game -- Set gameStarted to true
     $('.startButton').click(function() {
@@ -69,7 +70,26 @@ $(document).ready(function() {
         console.log(gameStarted);
 //Clear container div
         generateQuestion()
+        setInterval(countDown, 1000);
     });
+
+    function countDown() {
+        timeRemaining--;
+        console.log(timeRemaining);
+        $('.timer').text("Timer: " + timeRemaining);
+        var indexCorrectAnswer = questionBank[questionNum].correctAnswer;
+        if (timeRemaining == 0) {
+            console.log("TIMES UP");
+            $('.container').empty()
+            $('.container').append("<div id=incorrect></div>", "<img src=" + questionBank[questionNum].image + ">", "<div id=wrongAnswer></div>");
+            $('#incorrect').text("TIME'S UP!");
+            $('#wrongAnswer').text(questionBank[questionNum].choices[indexCorrectAnswer]);
+            numberWrong++;
+            questionNum++;
+            setTimeout(generateQuestion, 4000);
+            timeRemaining = 14;                
+        }
+    }
 
     function generateQuestion() {
     $('.container').empty()
@@ -80,6 +100,7 @@ $(document).ready(function() {
             for(var i = 0; i < questionBank[questionNum].choices.length; i++) {
                 $('.container').append("<div class=answer>" + questionBank[questionNum].choices[i] + "</div>");
             }
+            $('.container').append("<div class=timer>Timer: "+ timeRemaining +"</div>")
             $('.answer').click(function(event) {
                 // var userGuess = indexOf(event.target);
                 console.log(event.target);
@@ -92,7 +113,10 @@ $(document).ready(function() {
                     $('.container').append("<div id=correct></div>", "<img src=" + questionBank[questionNum].image + ">", "<div id=rightAnswer></div>");
                     $('#correct').text('Correct!');
                     $('#rightAnswer').text(questionBank[questionNum].choices[indexCorrectAnswer]);
+                    questionNum++;
                     numberRight++;
+                    setTimeout(generateQuestion, 4000);
+                    timeRemaining = 14;
                 } else {
                     console.log(false);
                     $('.container').empty()
@@ -100,11 +124,11 @@ $(document).ready(function() {
                     $('#incorrect').text('Incorrect :(');
                     $('#wrongAnswer').text(questionBank[questionNum].choices[indexCorrectAnswer]);
                     numberWrong++;
+                    questionNum++;
+                    setTimeout(generateQuestion, 4000)
+                    timeRemaining = 14;
                 }
 
-                // questionNum++;
-                // generateQuestion();
-                //This click function will repeat the function generateQuestion each time the user clicks a button with a class of .answer
             })
     }
 })
